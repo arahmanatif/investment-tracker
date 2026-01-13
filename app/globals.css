@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600&display=swap');
-
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;
@@ -44,7 +42,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Readex Pro', sans-serif;
   }
 }
 
