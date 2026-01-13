@@ -9,7 +9,7 @@ import { Trash2, Plus, TrendingUp, Wallet, PiggyBank, Sparkles } from 'lucide-re
 
 export default function InvestmentTracker() {
   const [investments, setInvestments] = useState([]);
-  const [inputMode, setInputMode] = useState('capital'); // 'capital' or 'total'
+  const [inputMode, setInputMode] = useState('total'); // 'capital' or 'total'
   const [formData, setFormData] = useState({
     name: '',
     capital: '',
@@ -106,12 +106,12 @@ export default function InvestmentTracker() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
             <Sparkles className="w-8 h-8 text-amber-400" />
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-l from-amber-200 via-emerald-200 to-amber-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-l from-amber-200 via-emerald-200 to-amber-200 bg-clip-text text-transparent leading-relaxed pb-2">
               مُستثمر
             </h1>
             <Sparkles className="w-8 h-8 text-amber-400" />
           </div>
-          <p className="text-slate-400 text-lg">تابع استثماراتك واحسب أرباحك بسهولة</p>
+          <p className="text-slate-400 text-lg">تابع أداء استثماراتك المختلفة في مكان واحد واحسب أرباحك فوراً</p>
         </div>
 
         {/* Add Investment Form */}
@@ -126,6 +126,17 @@ export default function InvestmentTracker() {
             {/* Input Mode Toggle */}
             <div className="flex gap-2 mb-4">
               <Button
+                onClick={() => switchInputMode('total')}
+                variant={inputMode === 'total' ? 'default' : 'outline'}
+                className={`flex-1 transition-all duration-300 ${
+                  inputMode === 'total'
+                    ? 'bg-gradient-to-l from-emerald-600 to-emerald-500 text-white'
+                    : 'bg-slate-700/30 border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                }`}
+              >
+                الحساب بالأرباح
+              </Button>
+              <Button
                 onClick={() => switchInputMode('capital')}
                 variant={inputMode === 'capital' ? 'default' : 'outline'}
                 className={`flex-1 transition-all duration-300 ${
@@ -134,18 +145,7 @@ export default function InvestmentTracker() {
                     : 'bg-slate-700/30 border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700/50'
                 }`}
               >
-                إدخال رأس المال
-              </Button>
-              <Button
-                onClick={() => switchInputMode('total')}
-                variant={inputMode === 'total' ? 'default' : 'outline'}
-                className={`flex-1 transition-all duration-300 ${
-                  inputMode === 'total'
-                    ? 'bg-gradient-to-l from-amber-600 to-amber-500 text-white'
-                    : 'bg-slate-700/30 border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700/50'
-                }`}
-              >
-                إدخال الإجمالي بعد الربح
+                الحساب برأس المال
               </Button>
             </div>
 
@@ -226,48 +226,53 @@ export default function InvestmentTracker() {
         </Card>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          {/* Capital + Profit Card */}
           <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 backdrop-blur-xl">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="p-4">
+              <div className="space-y-3">
                 <div>
-                  <p className="text-blue-300 text-sm mb-1">إجمالي رأس المال</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(totalCapital)}</p>
+                  <p className="text-blue-300 text-xs mb-1">إجمالي رأس المال</p>
+                  <p className="text-xl font-bold text-white">{formatNumber(totalCapital)}</p>
                 </div>
-                <div className="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center">
-                  <Wallet className="w-7 h-7 text-blue-400" />
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-emerald-500/30 rounded-full flex items-center justify-center">
+                    <span className="text-emerald-400 text-sm font-bold">+</span>
+                  </div>
+                  <div className="h-px flex-1 bg-slate-600/50"></div>
+                </div>
+                <div>
+                  <p className="text-emerald-300 text-xs mb-1">الأرباح</p>
+                  <p className="text-xl font-bold text-emerald-400">+{formatNumber(totalProfit)}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* Revenue Card */}
           <Card className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 border-emerald-500/30 backdrop-blur-xl">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-emerald-300 text-sm mb-1">إجمالي الأرباح</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(totalProfit)}</p>
-                </div>
-                <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
-                  <PiggyBank className="w-7 h-7 text-emerald-400" />
-                </div>
-              </div>
+              <p className="text-emerald-300 text-sm mb-1">الإجمالي بالأرباح</p>
+              <p className="text-3xl font-bold text-white">{formatNumber(totalCapital + totalProfit)}</p>
+              <p className="text-slate-400 text-xs mt-1">Revenue</p>
             </CardContent>
           </Card>
 
+          {/* Profit Rate Card */}
           <Card className="bg-gradient-to-br from-amber-600/20 to-amber-800/20 border-amber-500/30 backdrop-blur-xl">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-amber-300 text-sm mb-1">نسبة الربح الإجمالية</p>
-                  <p className="text-3xl font-bold text-white">{formatNumber(overallProfitRate)}%</p>
-                </div>
-                <div className="w-14 h-14 bg-amber-500/20 rounded-2xl flex items-center justify-center">
-                  <TrendingUp className="w-7 h-7 text-amber-400" />
-                </div>
-              </div>
+              <p className="text-amber-300 text-sm mb-1">نسبة الربح</p>
+              <p className="text-3xl font-bold text-white">{formatNumber(overallProfitRate)}%</p>
             </CardContent>
           </Card>
+
+          {/* Performance Indicator */}
+          <div className="flex flex-col items-center justify-center p-4">
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${overallProfitRate >= 0 ? 'bg-emerald-500/20' : 'bg-red-500/20'}`}>
+              <TrendingUp className={`w-8 h-8 ${overallProfitRate >= 0 ? 'text-emerald-400' : 'text-red-400 rotate-180'}`} />
+            </div>
+            <p className="text-slate-400 text-xs mt-2">مؤشر الأداء</p>
+          </div>
         </div>
 
         {/* Investments List */}
