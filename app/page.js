@@ -9,10 +9,12 @@ import { Trash2, Plus, TrendingUp, Wallet, PiggyBank, Sparkles } from 'lucide-re
 
 export default function InvestmentTracker() {
   const [investments, setInvestments] = useState([]);
+  const [inputMode, setInputMode] = useState('capital'); // 'capital' or 'total'
   const [formData, setFormData] = useState({
     name: '',
     capital: '',
-    profitRate: ''
+    profitRate: '',
+    totalAmount: ''
   });
 
   const handleInputChange = (e) => {
@@ -24,21 +26,46 @@ export default function InvestmentTracker() {
   };
 
   const addInvestment = () => {
-    if (!formData.name || !formData.capital || !formData.profitRate) return;
-    
+    const rate = parseFloat(formData.profitRate);
+
+    // Validate based on input mode
+    if (!formData.name || !formData.profitRate || isNaN(rate)) return;
+
+    let capital;
+
+    if (inputMode === 'capital') {
+      // Direct capital input mode
+      if (!formData.capital) return;
+      capital = parseFloat(formData.capital);
+    } else {
+      // Total amount mode - calculate capital from total and profit rate
+      // Formula: capital = totalAmount / (1 + profitRate/100)
+      if (!formData.totalAmount) return;
+      const totalAmount = parseFloat(formData.totalAmount);
+      capital = totalAmount / (1 + rate / 100);
+    }
+
+    if (isNaN(capital)) return;
+
     const newInvestment = {
       id: Date.now(),
       name: formData.name,
-      capital: parseFloat(formData.capital),
-      profitRate: parseFloat(formData.profitRate)
+      capital: capital,
+      profitRate: rate
     };
-    
+
     setInvestments(prev => [...prev, newInvestment]);
-    setFormData({ name: '', capital: '', profitRate: '' });
+    setFormData({ name: '', capital: '', profitRate: '', totalAmount: '' });
   };
 
   const removeInvestment = (id) => {
     setInvestments(prev => prev.filter(inv => inv.id !== id));
+  };
+
+  const switchInputMode = (mode) => {
+    setInputMode(mode);
+    // Clear capital/totalAmount when switching modes
+    setFormData(prev => ({ ...prev, capital: '', totalAmount: '' }));
   };
 
   const handleKeyPress = (e) => {
@@ -96,6 +123,32 @@ export default function InvestmentTracker() {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {/* Input Mode Toggle */}
+            <div className="flex gap-2 mb-4">
+              <Button
+                onClick={() => switchInputMode('capital')}
+                variant={inputMode === 'capital' ? 'default' : 'outline'}
+                className={`flex-1 transition-all duration-300 ${
+                  inputMode === 'capital'
+                    ? 'bg-gradient-to-l from-emerald-600 to-emerald-500 text-white'
+                    : 'bg-slate-700/30 border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                }`}
+              >
+                إدخال رأس المال
+              </Button>
+              <Button
+                onClick={() => switchInputMode('total')}
+                variant={inputMode === 'total' ? 'default' : 'outline'}
+                className={`flex-1 transition-all duration-300 ${
+                  inputMode === 'total'
+                    ? 'bg-gradient-to-l from-amber-600 to-amber-500 text-white'
+                    : 'bg-slate-700/30 border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700/50'
+                }`}
+              >
+                إدخال الإجمالي بعد الربح
+              </Button>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-slate-300">اسم الاستثمار</Label>
@@ -109,19 +162,37 @@ export default function InvestmentTracker() {
                   className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="capital" className="text-slate-300">رأس المال</Label>
-                <Input
-                  id="capital"
-                  name="capital"
-                  type="number"
-                  value={formData.capital}
-                  onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
-                  placeholder="10000"
-                  className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-                />
-              </div>
+
+              {inputMode === 'capital' ? (
+                <div className="space-y-2">
+                  <Label htmlFor="capital" className="text-slate-300">رأس المال</Label>
+                  <Input
+                    id="capital"
+                    name="capital"
+                    type="number"
+                    value={formData.capital}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    placeholder="10000"
+                    className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label htmlFor="totalAmount" className="text-slate-300">الإجمالي بعد الربح</Label>
+                  <Input
+                    id="totalAmount"
+                    name="totalAmount"
+                    type="number"
+                    value={formData.totalAmount}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    placeholder="11500"
+                    className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-amber-500 focus:ring-amber-500/20"
+                  />
+                </div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="profitRate" className="text-slate-300">نسبة الربح (%)</Label>
                 <Input
@@ -136,7 +207,15 @@ export default function InvestmentTracker() {
                 />
               </div>
             </div>
-            <Button 
+
+            {/* Helper text for total mode */}
+            {inputMode === 'total' && (
+              <p className="text-slate-500 text-sm mt-2">
+                💡 سيتم حساب رأس المال تلقائياً: رأس المال = الإجمالي ÷ (1 + نسبة الربح%)
+              </p>
+            )}
+
+            <Button
               onClick={addInvestment}
               className="w-full mt-4 bg-gradient-to-l from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold py-6 text-lg transition-all duration-300 shadow-lg shadow-emerald-500/25"
             >
