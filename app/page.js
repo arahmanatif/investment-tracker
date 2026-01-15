@@ -150,7 +150,7 @@ export default function InvestmentTracker() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="name" className="text-slate-300">اسم الاستثمار</Label>
                 <Input
                   id="name"
@@ -158,13 +158,13 @@ export default function InvestmentTracker() {
                   value={formData.name}
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
-                  placeholder="مثال: ذهب، أسهم، عقارات"
-                  className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  placeholder="مثال: ذهب، أسهم، عقارات..."
+                  className="bg-white/95 border-2 border-slate-300 text-slate-800 placeholder:text-slate-400 rounded-full px-5 py-6 focus:border-emerald-600 focus:ring-0 focus:ring-emerald-600/0 transition-colors"
                 />
               </div>
 
               {inputMode === 'capital' ? (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="capital" className="text-slate-300">رأس المال</Label>
                   <Input
                     id="capital"
@@ -174,11 +174,11 @@ export default function InvestmentTracker() {
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="10000"
-                    className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
+                    className="bg-white/95 border-2 border-slate-300 text-slate-800 placeholder:text-slate-400 rounded-full px-5 py-6 focus:border-emerald-600 focus:ring-0 focus:ring-emerald-600/0 transition-colors"
                   />
                 </div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="totalAmount" className="text-slate-300">الإجمالي بعد الربح</Label>
                   <Input
                     id="totalAmount"
@@ -188,12 +188,12 @@ export default function InvestmentTracker() {
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="11500"
-                    className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-amber-500 focus:ring-amber-500/20"
+                    className="bg-white/95 border-2 border-slate-300 text-slate-800 placeholder:text-slate-400 rounded-full px-5 py-6 focus:border-emerald-600 focus:ring-0 focus:ring-emerald-600/0 transition-colors"
                   />
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="profitRate" className="text-slate-300">نسبة الربح (%)</Label>
                 <Input
                   id="profitRate"
@@ -203,7 +203,7 @@ export default function InvestmentTracker() {
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
                   placeholder="15"
-                  className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20"
+                  className="bg-white/95 border-2 border-slate-300 text-slate-800 placeholder:text-slate-400 rounded-full px-5 py-6 focus:border-emerald-600 focus:ring-0 focus:ring-emerald-600/0 transition-colors"
                 />
               </div>
             </div>
