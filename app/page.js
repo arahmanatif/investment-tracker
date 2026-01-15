@@ -1,17 +1,27 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Trash2, Sun } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Trash2, Sun, Moon } from 'lucide-react';
 
 export default function InvestmentTracker() {
   const [investments, setInvestments] = useState([]);
   const [inputMode, setInputMode] = useState('total'); // 'capital' or 'total'
+  const [isLightMode, setIsLightMode] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     capital: '',
     profitRate: '',
     totalAmount: ''
   });
+
+  // Toggle light/dark mode
+  useEffect(() => {
+    if (isLightMode) {
+      document.body.classList.add('light-mode');
+    } else {
+      document.body.classList.remove('light-mode');
+    }
+  }, [isLightMode]);
 
   // Convert Arabic numerals to English
   const convertArabicToEnglish = (str) => {
@@ -101,25 +111,28 @@ export default function InvestmentTracker() {
   };
 
   // Empty state icon component
-  const EmptyStateIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
-      <path d="M28 49C30.5773 49 32.6667 46.9107 32.6667 44.3333C32.6667 41.756 30.5773 39.6667 28 39.6667C25.4227 39.6667 23.3333 41.756 23.3333 44.3333C23.3333 46.9107 25.4227 49 28 49Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M28 16.3333C30.5773 16.3333 32.6667 14.244 32.6667 11.6667C32.6667 9.08934 30.5773 7 28 7C25.4227 7 23.3333 9.08934 23.3333 11.6667C23.3333 14.244 25.4227 16.3333 28 16.3333Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M37.3333 32.6667C39.9107 32.6667 42 30.5773 42 28C42 25.4227 39.9107 23.3333 37.3333 23.3333C34.756 23.3333 32.6667 25.4227 32.6667 28C32.6667 30.5773 34.756 32.6667 37.3333 32.6667Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M46.6667 49C49.244 49 51.3333 46.9107 51.3333 44.3333C51.3333 41.756 49.244 39.6667 46.6667 39.6667C44.0893 39.6667 42 41.756 42 44.3333C42 46.9107 44.0893 49 46.6667 49Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M9.33332 49C11.9107 49 14 46.9107 14 44.3333C14 41.756 11.9107 39.6667 9.33332 39.6667C6.75599 39.6667 4.66666 41.756 4.66666 44.3333C4.66666 46.9107 6.75599 49 9.33332 49Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M18.6667 32.6667C21.244 32.6667 23.3333 30.5773 23.3333 28C23.3333 25.4227 21.244 23.3333 18.6667 23.3333C16.0893 23.3333 14 25.4227 14 28C14 30.5773 16.0893 32.6667 18.6667 32.6667Z" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
+  const EmptyStateIcon = ({ isLightMode }) => {
+    const strokeColor = isLightMode ? "#28755b" : "white";
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <path d="M28 49C30.5773 49 32.6667 46.9107 32.6667 44.3333C32.6667 41.756 30.5773 39.6667 28 39.6667C25.4227 39.6667 23.3333 41.756 23.3333 44.3333C23.3333 46.9107 25.4227 49 28 49Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M28 16.3333C30.5773 16.3333 32.6667 14.244 32.6667 11.6667C32.6667 9.08934 30.5773 7 28 7C25.4227 7 23.3333 9.08934 23.3333 11.6667C23.3333 14.244 25.4227 16.3333 28 16.3333Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M37.3333 32.6667C39.9107 32.6667 42 30.5773 42 28C42 25.4227 39.9107 23.3333 37.3333 23.3333C34.756 23.3333 32.6667 25.4227 32.6667 28C32.6667 30.5773 34.756 32.6667 37.3333 32.6667Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M46.6667 49C49.244 49 51.3333 46.9107 51.3333 44.3333C51.3333 41.756 49.244 39.6667 46.6667 39.6667C44.0893 39.6667 42 41.756 42 44.3333C42 46.9107 44.0893 49 46.6667 49Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9.33332 49C11.9107 49 14 46.9107 14 44.3333C14 41.756 11.9107 39.6667 9.33332 39.6667C6.75599 39.6667 4.66666 41.756 4.66666 44.3333C4.66666 46.9107 6.75599 49 9.33332 49Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M18.6667 32.6667C21.244 32.6667 23.3333 30.5773 23.3333 28C23.3333 25.4227 21.244 23.3333 18.6667 23.3333C16.0893 23.3333 14 25.4227 14 28C14 30.5773 16.0893 32.6667 18.6667 32.6667Z" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    );
+  };
 
   // Logo component
-  const Logo = () => (
+  const Logo = ({ isLightMode }) => (
     <svg width="144" height="64" viewBox="0 0 144 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="97%" y2="100%" gradientUnits="userSpaceOnUse">
-          <stop offset="0.19%" stopColor="white" stopOpacity="0.3"/>
-          <stop offset="50.1%" stopColor="white" stopOpacity="0.8"/>
-          <stop offset="100%" stopColor="white" stopOpacity="0.3"/>
+          <stop offset="0.19%" stopColor={isLightMode ? "#28755b" : "white"} stopOpacity={isLightMode ? "0.5" : "0.3"}/>
+          <stop offset="50.1%" stopColor={isLightMode ? "#28755b" : "white"} stopOpacity={isLightMode ? "1" : "0.8"}/>
+          <stop offset="100%" stopColor={isLightMode ? "#28755b" : "white"} stopOpacity={isLightMode ? "0.5" : "0.3"}/>
         </linearGradient>
       </defs>
       <path d="M11.5983 19.8202C12.0165 19.4008 12.2611 19.4013 12.6778 19.8221L15.7576 22.9326C16.6048 23.7882 17.1009 23.7845 17.936 22.9169L20.6775 20.0684C21.4763 19.2384 21.4795 18.754 20.6921 17.9131L17.9354 14.9693C17.1019 14.0792 16.6003 14.0719 15.7425 14.9383L12.6858 18.0254C12.2634 18.452 12.0159 18.4505 11.5983 18.0193L8.60837 14.932C7.7729 14.0693 7.27788 14.0665 6.43311 14.92L3.59546 17.7871C2.77473 18.6163 2.76826 19.106 3.56583 19.9578L6.31213 22.8905C7.14286 23.7776 7.64295 23.7859 8.5011 22.9255L11.5983 19.8202Z" fill="url(#logoGradient)"/>
@@ -131,89 +144,37 @@ export default function InvestmentTracker() {
   );
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#001a08' }}>
+    <div className={`min-h-screen p-4 md:p-8 transition-colors duration-300 ${isLightMode ? 'bg-[#f5f5f5]' : 'bg-[#001a08]'}`}>
       {/* Header Section */}
       <div className="relative max-w-6xl mx-auto">
         {/* Theme Toggle */}
-        <button className="absolute top-0 left-0 p-2 text-white/60 hover:text-white transition-colors">
-          <Sun className="w-6 h-6" />
+        <button
+          onClick={() => setIsLightMode(!isLightMode)}
+          className={`absolute top-0 left-0 p-2 transition-colors ${
+            isLightMode ? 'text-black/60 hover:text-black' : 'text-white/60 hover:text-white'
+          }`}
+        >
+          {isLightMode ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
         </button>
 
         {/* Logo */}
         <div className="text-center pt-8 mb-4">
           <div className="inline-flex items-center justify-center mb-6">
-            <Logo />
+            <Logo isLightMode={isLightMode} />
           </div>
-          <p className="text-white text-lg md:text-xl leading-relaxed">
+          <p className={`text-lg md:text-xl leading-relaxed ${isLightMode ? 'text-black' : 'text-white'}`}>
             تابع أداءات استثماراتك المختلفة بشكل تراكمي
             <br />
             واحسب أرباحك مباشرة
           </p>
         </div>
 
-        {/* Main Content - Two Column Layout (Investments Left, Calculator Right) */}
+        {/* Main Content - Two Column Layout */}
         <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
 
-          {/* Empty State / Investments List - Left Side (FIRST in DOM = LEFT) */}
+          {/* Calculator Card - FIRST in DOM (TOP on mobile), lg:order-2 (RIGHT on desktop) */}
           <div
-            className={`w-full lg:w-[476px] min-h-[436px] rounded-[20px] flex flex-col p-6 ${
-              investments.length === 0
-                ? 'items-center justify-center border-2 border-dashed'
-                : 'items-stretch justify-start'
-            }`}
-            style={investments.length === 0 ? { borderColor: 'rgba(255, 255, 255, 0.2)' } : {}}
-          >
-            {investments.length === 0 ? (
-              <div className="text-center" style={{ opacity: 0.4 }}>
-                <div className="mb-6 flex justify-center text-white">
-                  <EmptyStateIcon />
-                </div>
-                <p className="text-white text-xl leading-relaxed">
-                  ابدأ بإضافة أول استثماراتك، ستبدأ الاستثمارات
-                  <br />
-                  بالظهور تباعًا فور إضافتها
-                </p>
-              </div>
-            ) : (
-              <div className="w-full space-y-3 overflow-y-auto max-h-[400px]">
-                {investments.map((investment) => {
-                  const profit = investment.capital * investment.profitRate / 100;
-                  return (
-                    <div
-                      key={investment.id}
-                      className="bg-white/10 rounded-[10px] p-4 flex items-center justify-between group hover:bg-white/15 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => removeInvestment(investment.id)}
-                          className="text-white/40 hover:text-red-400 transition-colors p-1"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                        <div className="text-right">
-                          <p className="text-emerald-400 font-bold">+{formatNumber(profit)}</p>
-                          <p className="text-white/60 text-sm">{investment.profitRate}%</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <h3 className="text-white font-medium">{investment.name}</h3>
-                          <p className="text-white/60 text-sm">
-                            رأس المال: {formatNumber(investment.capital)}
-                          </p>
-                        </div>
-                        <span className="text-2xl">{getInvestmentIcon(investment.name)}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* Calculator Card - Right Side (SECOND in DOM = RIGHT) */}
-          <div
-            className="w-full lg:w-[476px] rounded-[20px] p-8"
+            className="w-full lg:w-[476px] lg:order-2 rounded-[20px] p-8"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
           >
             {/* Card Title */}
@@ -337,6 +298,69 @@ export default function InvestmentTracker() {
                 + إضافة الاستثمار
               </button>
             </div>
+          </div>
+
+          {/* Investments List - SECOND in DOM (BOTTOM on mobile), lg:order-1 (LEFT on desktop) */}
+          <div
+            className={`w-full lg:w-[476px] lg:order-1 min-h-[436px] rounded-[20px] flex flex-col p-6 ${
+              investments.length === 0
+                ? 'items-center justify-center border-2 border-dashed'
+                : 'items-stretch justify-start'
+            }`}
+            style={investments.length === 0 ? { borderColor: isLightMode ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.2)' } : {}}
+          >
+            {investments.length === 0 ? (
+              <div className="text-center" style={{ opacity: 0.4 }}>
+                <div className={`mb-6 flex justify-center ${isLightMode ? 'text-black' : 'text-white'}`}>
+                  <EmptyStateIcon isLightMode={isLightMode} />
+                </div>
+                <p className={`text-xl leading-relaxed ${isLightMode ? 'text-black' : 'text-white'}`}>
+                  ابدأ بإضافة أول استثماراتك، ستبدأ الاستثمارات
+                  <br />
+                  بالظهور تباعًا فور إضافتها
+                </p>
+              </div>
+            ) : (
+              <div className="w-full space-y-3 overflow-y-auto max-h-[400px]">
+                {investments.map((investment) => {
+                  const profit = investment.capital * investment.profitRate / 100;
+                  return (
+                    <div
+                      key={investment.id}
+                      className={`rounded-[10px] p-4 flex items-center justify-between group transition-colors ${
+                        isLightMode
+                          ? 'bg-[#28755b]/10 hover:bg-[#28755b]/15'
+                          : 'bg-white/10 hover:bg-white/15'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => removeInvestment(investment.id)}
+                          className={`transition-colors p-1 ${
+                            isLightMode ? 'text-black/40 hover:text-red-500' : 'text-white/40 hover:text-red-400'
+                          }`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                        <div className="text-right">
+                          <p className={`font-bold ${isLightMode ? 'text-emerald-600' : 'text-emerald-400'}`}>+{formatNumber(profit)}</p>
+                          <p className={`text-sm ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>{investment.profitRate}%</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <h3 className={`font-medium ${isLightMode ? 'text-black' : 'text-white'}`}>{investment.name}</h3>
+                          <p className={`text-sm ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>
+                            رأس المال: {formatNumber(investment.capital)}
+                          </p>
+                        </div>
+                        <span className="text-2xl">{getInvestmentIcon(investment.name)}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
