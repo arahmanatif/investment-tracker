@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Trash2, Sun, Zap } from 'lucide-react';
+import { Trash2, Sun } from 'lucide-react';
 
 export default function InvestmentTracker() {
   const [investments, setInvestments] = useState([]);
@@ -13,11 +13,25 @@ export default function InvestmentTracker() {
     totalAmount: ''
   });
 
+  // Convert Arabic numerals to English
+  const convertArabicToEnglish = (str) => {
+    const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    let result = str;
+    arabicNumerals.forEach((num, index) => {
+      result = result.replace(new RegExp(num, 'g'), index.toString());
+    });
+    return result;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Convert Arabic numerals to English for number fields
+    const convertedValue = ['capital', 'profitRate', 'totalAmount'].includes(name)
+      ? convertArabicToEnglish(value)
+      : value;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: convertedValue
     }));
   };
 
@@ -77,6 +91,7 @@ export default function InvestmentTracker() {
   const getInvestmentIcon = (name) => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('ذهب') || lowerName.includes('gold')) return '🥇';
+    if (lowerName.includes('فضة') || lowerName.includes('silver')) return '🪙';
     if (lowerName.includes('أسهم') || lowerName.includes('stock') || lowerName.includes('بورصة')) return '📈';
     if (lowerName.includes('عقار') || lowerName.includes('real estate') || lowerName.includes('شقة')) return '🏠';
     if (lowerName.includes('عملات') || lowerName.includes('crypto') || lowerName.includes('بيتكوين')) return '💰';
@@ -157,14 +172,14 @@ export default function InvestmentTracker() {
           <div className="inline-flex items-center justify-center mb-6">
             <Logo />
           </div>
-          <p className="text-white/80 text-lg md:text-xl leading-relaxed">
+          <p className="text-white text-lg md:text-xl leading-relaxed">
             تابع أداءات استثماراتك المختلفة بشكل تراكمي
             <br />
             واحسب أرباحك مباشرة
           </p>
         </div>
 
-        {/* Main Content - Two Column Layout (RTL: Calculator Right, Investments Left) */}
+        {/* Main Content - Two Column Layout (Calculator Right, Investments Left) */}
         <div className="flex flex-col lg:flex-row-reverse gap-6 mt-12 justify-center items-start">
 
           {/* Calculator Card - Right Side (appears first in RTL) */}
@@ -237,12 +252,13 @@ export default function InvestmentTracker() {
                     </label>
                     <input
                       name="capital"
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       value={formData.capital}
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
                       placeholder="10000"
-                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right"
+                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       dir="rtl"
                     />
                   </div>
@@ -253,12 +269,13 @@ export default function InvestmentTracker() {
                     </label>
                     <input
                       name="totalAmount"
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       value={formData.totalAmount}
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
                       placeholder="11500"
-                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right"
+                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       dir="rtl"
                     />
                   </div>
@@ -270,24 +287,17 @@ export default function InvestmentTracker() {
                   </label>
                   <input
                     name="profitRate"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={formData.profitRate}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="15"
-                    className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right"
+                    className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     dir="rtl"
                   />
                 </div>
               </div>
-
-              {/* Helper text for total mode */}
-              {inputMode === 'total' && (
-                <div className="flex items-center justify-end gap-2 text-black text-sm">
-                  <span>سيتم حساب رأس المال تلقائيًا</span>
-                  <Zap className="w-5 h-5 text-amber-500" />
-                </div>
-              )}
 
               {/* Submit Button */}
               <button
@@ -302,10 +312,12 @@ export default function InvestmentTracker() {
 
           {/* Empty State / Investments List - Left Side */}
           <div
-            className={`w-full lg:w-[476px] min-h-[436px] rounded-[20px] border-2 border-dashed flex flex-col p-6 ${
-              investments.length === 0 ? 'items-center justify-center' : 'items-stretch justify-start'
+            className={`w-full lg:w-[476px] min-h-[436px] rounded-[20px] flex flex-col p-6 ${
+              investments.length === 0
+                ? 'items-center justify-center border-2 border-dashed'
+                : 'items-stretch justify-start'
             }`}
-            style={{ borderColor: 'rgba(255, 255, 255, 0.2)' }}
+            style={investments.length === 0 ? { borderColor: 'rgba(255, 255, 255, 0.2)' } : {}}
           >
             {investments.length === 0 ? (
               <div className="text-center" style={{ opacity: 0.4 }}>
