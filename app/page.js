@@ -151,12 +151,69 @@ export default function InvestmentTracker() {
           </p>
         </div>
 
-        {/* Main Content - Two Column Layout (Calculator Right, Investments Left) */}
+        {/* Main Content - Two Column Layout (Investments Left, Calculator Right) */}
         <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
 
-          {/* Calculator Card - Right Side */}
+          {/* Empty State / Investments List - Left Side (FIRST in DOM = LEFT) */}
           <div
-            className="w-full lg:w-[476px] lg:order-2 rounded-[20px] p-8"
+            className={`w-full lg:w-[476px] min-h-[436px] rounded-[20px] flex flex-col p-6 ${
+              investments.length === 0
+                ? 'items-center justify-center border-2 border-dashed'
+                : 'items-stretch justify-start'
+            }`}
+            style={investments.length === 0 ? { borderColor: 'rgba(255, 255, 255, 0.2)' } : {}}
+          >
+            {investments.length === 0 ? (
+              <div className="text-center" style={{ opacity: 0.4 }}>
+                <div className="mb-6 flex justify-center text-white">
+                  <EmptyStateIcon />
+                </div>
+                <p className="text-white text-xl leading-relaxed">
+                  ابدأ بإضافة أول استثماراتك، ستبدأ الاستثمارات
+                  <br />
+                  بالظهور تباعًا فور إضافتها
+                </p>
+              </div>
+            ) : (
+              <div className="w-full space-y-3 overflow-y-auto max-h-[400px]">
+                {investments.map((investment) => {
+                  const profit = investment.capital * investment.profitRate / 100;
+                  return (
+                    <div
+                      key={investment.id}
+                      className="bg-white/10 rounded-[10px] p-4 flex items-center justify-between group hover:bg-white/15 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => removeInvestment(investment.id)}
+                          className="text-white/40 hover:text-red-400 transition-colors p-1"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                        <div className="text-right">
+                          <p className="text-emerald-400 font-bold">+{formatNumber(profit)}</p>
+                          <p className="text-white/60 text-sm">{investment.profitRate}%</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <h3 className="text-white font-medium">{investment.name}</h3>
+                          <p className="text-white/60 text-sm">
+                            رأس المال: {formatNumber(investment.capital)}
+                          </p>
+                        </div>
+                        <span className="text-2xl">{getInvestmentIcon(investment.name)}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Calculator Card - Right Side (SECOND in DOM = RIGHT) */}
+          <div
+            className="w-full lg:w-[476px] rounded-[20px] p-8"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
           >
             {/* Card Title */}
@@ -280,63 +337,6 @@ export default function InvestmentTracker() {
                 + إضافة الاستثمار
               </button>
             </div>
-          </div>
-
-          {/* Empty State / Investments List - Left Side */}
-          <div
-            className={`w-full lg:w-[476px] lg:order-1 min-h-[436px] rounded-[20px] flex flex-col p-6 ${
-              investments.length === 0
-                ? 'items-center justify-center border-2 border-dashed'
-                : 'items-stretch justify-start'
-            }`}
-            style={investments.length === 0 ? { borderColor: 'rgba(255, 255, 255, 0.2)' } : {}}
-          >
-            {investments.length === 0 ? (
-              <div className="text-center" style={{ opacity: 0.4 }}>
-                <div className="mb-6 flex justify-center text-white">
-                  <EmptyStateIcon />
-                </div>
-                <p className="text-white text-xl leading-relaxed">
-                  ابدأ بإضافة أول استثماراتك، ستبدأ الاستثمارات
-                  <br />
-                  بالظهور تباعًا فور إضافتها
-                </p>
-              </div>
-            ) : (
-              <div className="w-full space-y-3 overflow-y-auto max-h-[400px]">
-                {investments.map((investment) => {
-                  const profit = investment.capital * investment.profitRate / 100;
-                  return (
-                    <div
-                      key={investment.id}
-                      className="bg-white/10 rounded-[10px] p-4 flex items-center justify-between group hover:bg-white/15 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => removeInvestment(investment.id)}
-                          className="text-white/40 hover:text-red-400 transition-colors p-1"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                        <div className="text-right">
-                          <p className="text-emerald-400 font-bold">+{formatNumber(profit)}</p>
-                          <p className="text-white/60 text-sm">{investment.profitRate}%</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <h3 className="text-white font-medium">{investment.name}</h3>
-                          <p className="text-white/60 text-sm">
-                            رأس المال: {formatNumber(investment.capital)}
-                          </p>
-                        </div>
-                        <span className="text-2xl">{getInvestmentIcon(investment.name)}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
         </div>
       </div>
