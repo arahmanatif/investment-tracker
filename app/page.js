@@ -170,11 +170,11 @@ export default function InvestmentTracker() {
         </div>
 
         {/* Main Content - Two Column Layout */}
-        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start" dir="ltr">
+        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
 
-          {/* Calculator Card - FIRST in DOM (TOP on mobile), lg:order-2 (RIGHT on desktop) */}
+          {/* Calculator Card - FIRST in DOM (TOP on mobile), lg:order-1 (RIGHT on desktop in RTL) */}
           <div
-            className="w-full lg:w-[476px] lg:order-2 rounded-[20px] p-8"
+            className="w-full lg:w-[29.75rem] lg:order-1 rounded-[1.25rem] p-8"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
           >
             {/* Card Title */}
@@ -185,26 +185,17 @@ export default function InvestmentTracker() {
             {/* Segmented Control with Animation */}
             <div
               className="h-12 p-1 rounded-full mb-6 flex relative"
-              dir="ltr"
               style={{
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
               }}
             >
               {/* Animated Background Pill */}
               <div
-                className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white/80 rounded-full shadow-[0px_4px_10px_0px_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
+                className="absolute top-1 bottom-1 w-[calc(50%-0.25rem)] bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
                 style={{
-                  left: inputMode === 'total' ? '4px' : 'calc(50% + 4px)'
+                  right: inputMode === 'total' ? '0.25rem' : 'calc(50% + 0.25rem)'
                 }}
               />
-              <button
-                onClick={() => switchInputMode('total')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
-                  inputMode === 'total' ? 'text-black' : 'text-black/60'
-                }`}
-              >
-                الحساب بالأرباح
-              </button>
               <button
                 onClick={() => switchInputMode('capital')}
                 className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
@@ -212,6 +203,14 @@ export default function InvestmentTracker() {
                 }`}
               >
                 الحساب برأس المال
+              </button>
+              <button
+                onClick={() => switchInputMode('total')}
+                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
+                  inputMode === 'total' ? 'text-black' : 'text-black/60'
+                }`}
+              >
+                الحساب بالأرباح
               </button>
             </div>
 
@@ -300,9 +299,9 @@ export default function InvestmentTracker() {
             </div>
           </div>
 
-          {/* Investments List - SECOND in DOM (BOTTOM on mobile), lg:order-1 (LEFT on desktop) */}
+          {/* Investments List - SECOND in DOM (BOTTOM on mobile), lg:order-2 (LEFT on desktop in RTL) */}
           <div
-            className={`w-full lg:w-[476px] lg:order-1 min-h-[436px] rounded-[20px] flex flex-col p-6 ${
+            className={`w-full lg:w-[29.75rem] lg:order-2 min-h-[27.25rem] rounded-[1.25rem] flex flex-col p-6 ${
               investments.length === 0
                 ? 'items-center justify-center border-2 border-dashed'
                 : 'items-stretch justify-start'
@@ -321,13 +320,13 @@ export default function InvestmentTracker() {
                 </p>
               </div>
             ) : (
-              <div className="w-full space-y-3 overflow-y-auto max-h-[400px]">
+              <div className="w-full space-y-3 overflow-y-auto max-h-[25rem]">
                 {investments.map((investment) => {
                   const profit = investment.capital * investment.profitRate / 100;
                   return (
                     <div
                       key={investment.id}
-                      className={`rounded-[10px] p-4 flex items-center justify-between group transition-colors ${
+                      className={`rounded-[0.625rem] p-4 flex items-center justify-between group transition-colors ${
                         isLightMode
                           ? 'bg-[#28755b]/10 hover:bg-[#28755b]/15'
                           : 'bg-white/10 hover:bg-white/15'
