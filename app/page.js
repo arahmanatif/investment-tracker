@@ -288,10 +288,18 @@ export default function InvestmentTracker() {
                 </div>
               </div>
 
+              {/* Auto-calculation hint */}
+              {inputMode === 'total' && (
+                <div className="flex items-center justify-end gap-2 text-sm text-black/60">
+                  <span>سيتم حساب رأس المال تلقائيًا</span>
+                  <span className="text-amber-500">⚡</span>
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 onClick={addInvestment}
-                className="w-full h-12 rounded-[10px] text-white font-medium text-base transition-colors hover:opacity-90"
+                className="w-full h-12 rounded-[0.625rem] text-white font-medium text-base transition-colors hover:opacity-90"
                 style={{ backgroundColor: '#28755b' }}
               >
                 + إضافة الاستثمار
