@@ -144,9 +144,9 @@ export default function InvestmentTracker() {
   );
 
   return (
-    <div className={`min-h-screen p-4 md:p-8 transition-colors duration-300 ${isLightMode ? 'bg-[#f5f5f5]' : 'bg-[#001a08]'}`}>
-      {/* Header Section */}
-      <div className="relative max-w-6xl mx-auto">
+    <div className={`min-h-screen flex items-center justify-center p-4 md:p-8 transition-colors duration-300 ${isLightMode ? 'bg-[#f5f5f5]' : 'bg-[#001a08]'}`}>
+      {/* Main Container - Centered */}
+      <div className="relative w-full max-w-6xl">
         {/* Theme Toggle */}
         <button
           onClick={() => setIsLightMode(!isLightMode)}
@@ -158,7 +158,7 @@ export default function InvestmentTracker() {
         </button>
 
         {/* Logo */}
-        <div className="text-center pt-8 mb-4">
+        <div className="text-center mb-4">
           <div className="inline-flex items-center justify-center mb-6">
             <Logo isLightMode={isLightMode} />
           </div>
@@ -170,11 +170,11 @@ export default function InvestmentTracker() {
         </div>
 
         {/* Main Content - Two Column Layout */}
-        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
+        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-stretch">
 
           {/* Calculator Card - FIRST in DOM (TOP on mobile), lg:order-1 (RIGHT on desktop in RTL) */}
           <div
-            className="w-full lg:w-[29.75rem] lg:order-1 rounded-[1.25rem] p-8"
+            className="w-full lg:w-[29.75rem] lg:order-1 rounded-[1.25rem] p-8 flex flex-col"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
           >
             {/* Card Title */}
@@ -182,28 +182,24 @@ export default function InvestmentTracker() {
               حاسبة الاستثمار التراكمية
             </h2>
 
-            {/* Segmented Control with Animation */}
+            {/* Segmented Control with Animation - 4px padding strictly */}
             <div
-              className="h-12 p-1 rounded-full mb-6 flex relative"
+              className="h-12 rounded-full mb-6 flex relative"
               style={{
+                padding: '4px',
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
               }}
             >
               {/* Animated Background Pill */}
               <div
-                className="absolute top-1 bottom-1 w-[calc(50%-0.25rem)] bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
+                className="absolute bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
                 style={{
-                  right: inputMode === 'total' ? '0.25rem' : 'calc(50% + 0.25rem)'
+                  top: '4px',
+                  bottom: '4px',
+                  width: 'calc(50% - 4px)',
+                  left: inputMode === 'total' ? '4px' : 'calc(50%)'
                 }}
               />
-              <button
-                onClick={() => switchInputMode('capital')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
-                  inputMode === 'capital' ? 'text-black' : 'text-black/60'
-                }`}
-              >
-                الحساب برأس المال
-              </button>
               <button
                 onClick={() => switchInputMode('total')}
                 className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
@@ -212,10 +208,18 @@ export default function InvestmentTracker() {
               >
                 الحساب بالأرباح
               </button>
+              <button
+                onClick={() => switchInputMode('capital')}
+                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
+                  inputMode === 'capital' ? 'text-black' : 'text-black/60'
+                }`}
+              >
+                الحساب برأس المال
+              </button>
             </div>
 
             {/* Form Fields */}
-            <div className="space-y-5">
+            <div className="space-y-5 flex-1 flex flex-col">
               {/* Investment Name */}
               <div className="space-y-3">
                 <label className="block text-sm font-medium text-black text-right">
@@ -227,7 +231,7 @@ export default function InvestmentTracker() {
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
                   placeholder="مثال: ذهب، أسهم، عقارات..."
-                  className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right"
+                  className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[0.625rem] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right"
                   dir="rtl"
                 />
               </div>
@@ -247,7 +251,7 @@ export default function InvestmentTracker() {
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
                       placeholder="10000"
-                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[0.625rem] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       dir="rtl"
                     />
                   </div>
@@ -264,7 +268,7 @@ export default function InvestmentTracker() {
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
                       placeholder="11500"
-                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[0.625rem] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       dir="rtl"
                     />
                   </div>
@@ -282,19 +286,14 @@ export default function InvestmentTracker() {
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="15"
-                    className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[10px] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full h-10 px-3 bg-white border border-[#cccccc] rounded-[0.625rem] text-black placeholder:text-[#cccccc] text-sm focus:outline-none focus:border-[#28755b] transition-colors text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     dir="rtl"
                   />
                 </div>
               </div>
 
-              {/* Auto-calculation hint */}
-              {inputMode === 'total' && (
-                <div className="flex items-center justify-end gap-2 text-sm text-black/60">
-                  <span>سيتم حساب رأس المال تلقائيًا</span>
-                  <span className="text-amber-500">⚡</span>
-                </div>
-              )}
+              {/* Spacer to push button to bottom */}
+              <div className="flex-1" />
 
               {/* Submit Button */}
               <button
@@ -309,7 +308,7 @@ export default function InvestmentTracker() {
 
           {/* Investments List - SECOND in DOM (BOTTOM on mobile), lg:order-2 (LEFT on desktop in RTL) */}
           <div
-            className={`w-full lg:w-[29.75rem] lg:order-2 min-h-[27.25rem] rounded-[1.25rem] flex flex-col p-6 ${
+            className={`w-full lg:w-[29.75rem] lg:order-2 rounded-[1.25rem] flex flex-col p-6 ${
               investments.length === 0
                 ? 'items-center justify-center border-2 border-dashed'
                 : 'items-stretch justify-start'
