@@ -11,22 +11,36 @@
 }
 
 :root {
-  /* Colors - Mlkya Design System */
+  /* Colors - Dark Mode (Default) */
   --color-bg-primary: #001a08;
+  --color-bg-secondary: #002a10;
   --color-primary: #28755b;
+  --color-primary-hover: #3d9070;
   --color-white: #ffffff;
   --color-black: #000000;
   --color-border: #cccccc;
   --color-card-bg: rgba(255, 255, 255, 0.9);
   --color-tab-active: rgba(255, 255, 255, 0.8);
   --color-border-dashed: rgba(255, 255, 255, 0.2);
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.4);
+  --color-investment-card: rgba(255, 255, 255, 0.1);
+  --color-investment-card-hover: rgba(255, 255, 255, 0.15);
+  --color-profit: #34d399;
 
-  /* Typography */
+  /* Typography - Cap Height Based */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
   --font-size-lg: 20px;
   --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+
+  /* Line heights based on cap height */
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
 
   /* Spacing */
   --spacing-1: 4px;
@@ -44,6 +58,7 @@
 
   /* Shadows */
   --shadow-tab: 0px 4px 10px 0px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0px 8px 24px 0px rgba(0, 0, 0, 0.15);
 
   /* Sizes */
   --input-height: 40px;
@@ -51,15 +66,60 @@
   --card-width: 476px;
 }
 
+/* Light Mode */
+.light-mode {
+  --color-bg-primary: #f5f5f5;
+  --color-bg-secondary: #ffffff;
+  --color-primary: #28755b;
+  --color-primary-hover: #1f5c47;
+  --color-card-bg: #ffffff;
+  --color-tab-active: rgba(40, 117, 91, 0.1);
+  --color-border-dashed: rgba(0, 0, 0, 0.15);
+  --color-text-primary: #000000;
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-text-muted: rgba(0, 0, 0, 0.4);
+  --color-investment-card: rgba(40, 117, 91, 0.08);
+  --color-investment-card-hover: rgba(40, 117, 91, 0.12);
+  --color-profit: #059669;
+  --shadow-card: 0px 8px 24px 0px rgba(0, 0, 0, 0.08);
+}
+
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     background-color: var(--color-bg-primary);
-    color: var(--color-white);
+    color: var(--color-text-primary);
     font-family: 'Ping', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
+
+  /* Cap height typography - removes extra leading space */
+  h1, h2, h3, h4, h5, h6, p, span, label {
+    text-box-trim: trim-both;
+    text-edge: cap alphabetic;
+    line-height: var(--line-height-tight);
+  }
+
+  /* Fallback for browsers that don't support text-box-trim */
+  @supports not (text-box-trim: trim-both) {
+    h1, h2, h3, h4, h5, h6 {
+      line-height: var(--line-height-tight);
+      margin-top: -0.1em;
+    }
+  }
+}
+
+/* Cap height utility classes */
+.cap-height {
+  text-box-trim: trim-both;
+  text-edge: cap alphabetic;
+}
+
+.leading-cap {
+  line-height: var(--line-height-tight);
 }
 
 /* Custom Scrollbar */

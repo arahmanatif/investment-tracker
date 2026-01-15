@@ -1,7 +1,7 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'مُستثمر - تتبع استثماراتك',
+  title: 'مِلكية - تتبع استثماراتك',
   description: 'تطبيق لتتبع جميع استثماراتك وحساب الأرباح في مكان واحد',
 }
 
