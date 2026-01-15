@@ -152,11 +152,11 @@ export default function InvestmentTracker() {
         </div>
 
         {/* Main Content - Two Column Layout (Calculator Right, Investments Left) */}
-        <div className="flex flex-col lg:flex-row-reverse gap-6 mt-12 justify-center items-start">
+        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
 
-          {/* Calculator Card - Right Side (appears first in RTL) */}
+          {/* Calculator Card - Right Side */}
           <div
-            className="w-full lg:w-[476px] rounded-[20px] p-8"
+            className="w-full lg:w-[476px] lg:order-2 rounded-[20px] p-8"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
           >
             {/* Card Title */}
@@ -175,8 +175,8 @@ export default function InvestmentTracker() {
               <div
                 className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white/80 rounded-full shadow-[0px_4px_10px_0px_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
                 style={{
-                  transform: inputMode === 'total' ? 'translateX(0)' : 'translateX(calc(-100% - 8px))',
-                  right: '4px'
+                  transform: inputMode === 'capital' ? 'translateX(0)' : 'translateX(calc(100% + 8px))',
+                  left: '4px'
                 }}
               />
               <button
@@ -284,7 +284,7 @@ export default function InvestmentTracker() {
 
           {/* Empty State / Investments List - Left Side */}
           <div
-            className={`w-full lg:w-[476px] min-h-[436px] rounded-[20px] flex flex-col p-6 ${
+            className={`w-full lg:w-[476px] lg:order-1 min-h-[436px] rounded-[20px] flex flex-col p-6 ${
               investments.length === 0
                 ? 'items-center justify-center border-2 border-dashed'
                 : 'items-stretch justify-start'
