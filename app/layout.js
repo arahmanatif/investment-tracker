@@ -1,11 +1,4 @@
 import './globals.css'
-import { Readex_Pro } from 'next/font/google'
-
-const readexPro = Readex_Pro({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600'],
-  display: 'swap',
-})
 
 export const metadata = {
   title: 'مُستثمر - تتبع استثماراتك',
@@ -14,7 +7,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl" className={readexPro.className}>
+    <html lang="ar" dir="rtl">
       <body>{children}</body>
     </html>
   )
