@@ -29,41 +29,41 @@
   --color-investment-card-hover: rgba(255, 255, 255, 0.15);
   --color-profit: #34d399;
 
-  /* Typography - Cap Height Based */
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 20px;
-  --font-size-xl: 24px;
-  --font-size-2xl: 32px;
+  /* Typography - REM Based (16px = 1rem) */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-2xl: 2rem;     /* 32px */
 
   /* Line heights based on cap height */
   --line-height-tight: 1.1;
   --line-height-normal: 1.4;
   --line-height-relaxed: 1.6;
 
-  /* Spacing */
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 10px;
-  --spacing-4: 12px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-8: 32px;
+  /* Spacing - REM Based */
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.625rem;  /* 10px */
+  --spacing-4: 0.75rem;   /* 12px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
 
-  /* Border Radius */
-  --radius-sm: 10px;
-  --radius-lg: 20px;
-  --radius-full: 99px;
+  /* Border Radius - REM Based */
+  --radius-sm: 0.625rem;  /* 10px */
+  --radius-lg: 1.25rem;   /* 20px */
+  --radius-full: 99rem;
 
   /* Shadows */
-  --shadow-tab: 0px 4px 10px 0px rgba(0, 0, 0, 0.12);
-  --shadow-card: 0px 8px 24px 0px rgba(0, 0, 0, 0.15);
+  --shadow-tab: 0 0.25rem 0.625rem 0 rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 0.5rem 1.5rem 0 rgba(0, 0, 0, 0.15);
 
-  /* Sizes */
-  --input-height: 40px;
-  --button-height: 48px;
-  --card-width: 476px;
+  /* Sizes - REM Based */
+  --input-height: 2.5rem;   /* 40px */
+  --button-height: 3rem;    /* 48px */
+  --card-width: 29.75rem;   /* 476px */
 }
 
 /* Light Mode */
@@ -81,7 +81,7 @@
   --color-investment-card: rgba(40, 117, 91, 0.08);
   --color-investment-card-hover: rgba(40, 117, 91, 0.12);
   --color-profit: #059669;
-  --shadow-card: 0px 8px 24px 0px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 0.5rem 1.5rem 0 rgba(0, 0, 0, 0.08);
 }
 
 @layer base {
@@ -97,17 +97,17 @@
   }
 
   /* Cap height typography - removes extra leading space */
-  h1, h2, h3, h4, h5, h6, p, span, label {
+  h1, h2, h3, h4, h5, h6, p, span, label, button, a, div, input, textarea {
     text-box-trim: trim-both;
-    text-edge: cap alphabetic;
+    text-box-edge: cap alphabetic;
+    text-edge: cap alphabetic; /* Legacy property name */
     line-height: var(--line-height-tight);
   }
 
   /* Fallback for browsers that don't support text-box-trim */
   @supports not (text-box-trim: trim-both) {
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5, h6, p, span, label {
       line-height: var(--line-height-tight);
-      margin-top: -0.1em;
     }
   }
 }
@@ -115,6 +115,7 @@
 /* Cap height utility classes */
 .cap-height {
   text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
   text-edge: cap alphabetic;
 }
 
@@ -124,7 +125,7 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -133,7 +134,7 @@
 
 ::-webkit-scrollbar-thumb {
   background: #28755b;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -170,7 +170,7 @@ export default function InvestmentTracker() {
         </div>
 
         {/* Main Content - Two Column Layout */}
-        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start">
+        <div className="flex flex-col lg:flex-row gap-6 mt-12 justify-center items-start" dir="ltr">
 
           {/* Calculator Card - FIRST in DOM (TOP on mobile), lg:order-2 (RIGHT on desktop) */}
           <div
@@ -185,6 +185,7 @@ export default function InvestmentTracker() {
             {/* Segmented Control with Animation */}
             <div
               className="h-12 p-1 rounded-full mb-6 flex relative"
+              dir="ltr"
               style={{
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
               }}
@@ -193,8 +194,7 @@ export default function InvestmentTracker() {
               <div
                 className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white/80 rounded-full shadow-[0px_4px_10px_0px_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
                 style={{
-                  transform: inputMode === 'capital' ? 'translateX(0)' : 'translateX(calc(100% + 8px))',
-                  left: '4px'
+                  left: inputMode === 'total' ? '4px' : 'calc(50% + 4px)'
                 }}
               />
               <button
