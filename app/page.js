@@ -184,7 +184,7 @@ export default function InvestmentTracker() {
 
             {/* Segmented Control with Animation - 4px padding strictly */}
             <div
-              className="h-12 rounded-full mb-6 flex flex-row-reverse relative"
+              className="h-12 rounded-full mb-6 flex relative"
               style={{
                 padding: '4px',
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
@@ -197,18 +197,10 @@ export default function InvestmentTracker() {
                   top: '4px',
                   bottom: '4px',
                   width: 'calc(50% - 4px)',
-                  right: inputMode === 'total' ? '4px' : 'calc(50%)'
+                  left: inputMode === 'capital' ? '4px' : 'calc(50%)'
                 }}
               />
-              <button
-                type="button"
-                onClick={() => switchInputMode('total')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
-                  inputMode === 'total' ? 'text-black' : 'text-black/60'
-                }`}
-              >
-                الحساب بالأرباح
-              </button>
+              {/* LEFT button: capital */}
               <button
                 type="button"
                 onClick={() => switchInputMode('capital')}
@@ -217,6 +209,16 @@ export default function InvestmentTracker() {
                 }`}
               >
                 الحساب برأس المال
+              </button>
+              {/* RIGHT button: total */}
+              <button
+                type="button"
+                onClick={() => switchInputMode('total')}
+                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
+                  inputMode === 'total' ? 'text-black' : 'text-black/60'
+                }`}
+              >
+                الحساب بالأرباح
               </button>
             </div>
 
