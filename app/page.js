@@ -184,7 +184,7 @@ export default function InvestmentTracker() {
 
             {/* Segmented Control with Animation - 4px padding strictly */}
             <div
-              className="h-12 rounded-full mb-6 flex relative"
+              className="h-12 rounded-full mb-6 flex flex-row-reverse relative"
               style={{
                 padding: '4px',
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
@@ -197,7 +197,7 @@ export default function InvestmentTracker() {
                   top: '4px',
                   bottom: '4px',
                   width: 'calc(50% - 4px)',
-                  left: inputMode === 'total' ? '4px' : 'calc(50%)'
+                  right: inputMode === 'total' ? '4px' : 'calc(50%)'
                 }}
               />
               <button
