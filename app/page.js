@@ -192,7 +192,7 @@ export default function InvestmentTracker() {
             >
               {/* Animated Background Pill */}
               <div
-                className="absolute bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out"
+                className="absolute bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out pointer-events-none"
                 style={{
                   top: '4px',
                   bottom: '4px',
@@ -201,16 +201,18 @@ export default function InvestmentTracker() {
                 }}
               />
               <button
+                type="button"
                 onClick={() => switchInputMode('total')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
+                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
                   inputMode === 'total' ? 'text-black' : 'text-black/60'
                 }`}
               >
                 الحساب بالأرباح
               </button>
               <button
+                type="button"
                 onClick={() => switchInputMode('capital')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 ${
+                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
                   inputMode === 'capital' ? 'text-black' : 'text-black/60'
                 }`}
               >
