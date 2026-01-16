@@ -343,15 +343,15 @@ export default function InvestmentTracker() {
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
-                        <div className="text-right">
-                          <p className={`font-bold ${isLightMode ? 'text-emerald-600' : 'text-emerald-400'}`}>+{formatNumber(profit)}</p>
-                          <p className={`text-sm ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>{investment.profitRate}%</p>
+                        <div className="text-right flex flex-col gap-1">
+                          <p className={`font-bold leading-normal ${isLightMode ? 'text-emerald-600' : 'text-emerald-400'}`}>+{formatNumber(profit)}</p>
+                          <p className={`text-sm leading-normal ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>{investment.profitRate}%</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <h3 className={`font-medium ${isLightMode ? 'text-black' : 'text-white'}`}>{investment.name}</h3>
-                          <p className={`text-sm ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>
+                        <div className="text-right flex flex-col gap-1">
+                          <h3 className={`font-medium leading-normal ${isLightMode ? 'text-black' : 'text-white'}`}>{investment.name}</h3>
+                          <p className={`text-sm leading-normal ${isLightMode ? 'text-black/60' : 'text-white/60'}`}>
                             رأس المال: {formatNumber(investment.capital)}
                           </p>
                         </div>
