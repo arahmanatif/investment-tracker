@@ -96,18 +96,23 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Cap height typography - removes extra leading space */
-  h1, h2, h3, h4, h5, h6, p, span, label, button, a, div, input, textarea {
+  /* Cap height typography - only for text elements, not containers */
+  h1, h2, h3, h4, h5, h6, p, span, label {
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
-    text-edge: cap alphabetic; /* Legacy property name */
-    line-height: var(--line-height-tight);
+    text-edge: cap alphabetic;
+    line-height: var(--line-height-normal);
+  }
+
+  /* Buttons and inputs need normal line-height for proper sizing */
+  button, input, textarea {
+    line-height: var(--line-height-normal);
   }
 
   /* Fallback for browsers that don't support text-box-trim */
   @supports not (text-box-trim: trim-both) {
     h1, h2, h3, h4, h5, h6, p, span, label {
-      line-height: var(--line-height-tight);
+      line-height: var(--line-height-normal);
     }
   }
 }

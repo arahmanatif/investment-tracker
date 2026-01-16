@@ -182,40 +182,31 @@ export default function InvestmentTracker() {
               حاسبة الاستثمار التراكمية
             </h2>
 
-            {/* Segmented Control with Animation - 4px padding strictly */}
+            {/* Segmented Control - Simple approach */}
             <div
-              className="h-12 rounded-full mb-6 flex relative"
+              className="h-12 rounded-full mb-6 grid grid-cols-2 gap-1 p-1"
               style={{
-                padding: '4px',
                 background: 'linear-gradient(96.28deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.016) 50%, rgba(0, 0, 0, 0.08) 100%)'
               }}
             >
-              {/* Animated Background Pill */}
-              <div
-                className="absolute bg-white/80 rounded-full shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)] transition-all duration-300 ease-out pointer-events-none"
-                style={{
-                  top: '4px',
-                  bottom: '4px',
-                  width: 'calc(50% - 4px)',
-                  left: inputMode === 'capital' ? '4px' : 'calc(50%)'
-                }}
-              />
-              {/* LEFT button: capital */}
               <button
                 type="button"
                 onClick={() => switchInputMode('capital')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
-                  inputMode === 'capital' ? 'text-black' : 'text-black/60'
+                className={`rounded-full text-base font-bold transition-all duration-300 cursor-pointer ${
+                  inputMode === 'capital'
+                    ? 'bg-white/80 text-black shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)]'
+                    : 'bg-transparent text-black/60'
                 }`}
               >
                 الحساب برأس المال
               </button>
-              {/* RIGHT button: total */}
               <button
                 type="button"
                 onClick={() => switchInputMode('total')}
-                className={`flex-1 rounded-full text-base font-bold transition-colors duration-300 relative z-10 cursor-pointer ${
-                  inputMode === 'total' ? 'text-black' : 'text-black/60'
+                className={`rounded-full text-base font-bold transition-all duration-300 cursor-pointer ${
+                  inputMode === 'total'
+                    ? 'bg-white/80 text-black shadow-[0_0.25rem_0.625rem_0_rgba(0,0,0,0.12)]'
+                    : 'bg-transparent text-black/60'
                 }`}
               >
                 الحساب بالأرباح
