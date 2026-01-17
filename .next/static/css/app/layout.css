@@ -950,11 +950,11 @@ video {
 
 /* Light Mode */
 .light-mode {
-  --color-bg-primary: #ff0000;
+  --color-bg-primary: #f0f0f0;
   --color-bg-secondary: #ffffff;
   --color-primary: #28755b;
   --color-primary-hover: #1f5c47;
-  --color-card-bg: #ff0000;
+  --color-card-bg: #ffffff;
   --color-tab-active: rgba(40, 117, 91, 0.1);
   --color-border-dashed: rgba(0, 0, 0, 0.15);
   --color-text-primary: #000000;
